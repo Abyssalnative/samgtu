@@ -7,18 +7,19 @@ import javax.persistence.*;
 public class Teacher {
 
     @Id
-    @Column(name = "Id")
-    private int id;
+    @GeneratedValue
+    private long id;
 
-    @Column(name = "First_name")
+    @Column
     private String firstName;
 
-    @Column(name = "Last_name")
+    @Column
     private String lastName;
 
-    public Teacher(){}
+    public Teacher() {
+    }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

@@ -6,26 +6,28 @@ import javax.persistence.*;
 @Table(name = "schedule")
 public class Schedule {
 
-    @JoinColumn(name = "Lesson_Id")
-    @OneToOne
-    private Lesson lesson;
-
-    @Column(name = "Even")
-    private boolean Even;
-
-    @Column(name = "Day")
-    private int day;
-
-    @Column(name = "Pair_Order")
-    private int pairOrder;
-
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
+
+    @JoinColumn(name = "lesson_Id")
+    @ManyToOne
+    private Lesson lesson;
+
+    @Column
+    private boolean even;
+
+    @Column
+    private int day;
+
+    @Column
+    private int pairOrder;
+
 
     public Schedule(){}
 
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
@@ -42,11 +44,11 @@ public class Schedule {
     }
 
     public boolean isEven() {
-        return Even;
+        return even;
     }
 
     public void setEven(boolean even) {
-        Even = even;
+        this.even = even;
     }
 
     public int getDay() {

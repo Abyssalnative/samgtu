@@ -6,26 +6,29 @@ import javax.persistence.*;
 @Table(name = "lesson")
 public class Lesson {
 
-    @JoinColumn(name = "Teacher_id")
-    @OneToOne
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @JoinColumn(name = "teacher_id")
+    @ManyToOne
     private Teacher teacher;
 
-    @Column(name = "Name")
+    @Column
     private String name;
 
-    @Column(name = "Type")
+    @Column
     private String type;
 
-    @Id
-    private int id;
 
-    public Lesson(){};
+    public Lesson() {
+    }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

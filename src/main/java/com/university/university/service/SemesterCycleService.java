@@ -1,11 +1,16 @@
-package com.university.university.model;
+package com.university.university.service;
+
+import com.university.university.model.SemesterCycle;
 
 import java.util.Calendar;
 
 public class SemesterCycleService {
 
-    /*
-    Возвращает количество оставшихся четных недель
+
+    /**
+     * Находит количество оставшихся четных недель
+     *
+     * @return число четных недель
      */
     public static int remainingEvenWeek() {
         if (!(remainingWeek() % 2 == 0)) {
@@ -19,12 +24,14 @@ public class SemesterCycleService {
         }
     }
 
-    /*
-    Возвращает количество оставшихся нечетных недель
+    /**
+     * Находит количество оставшихся нечетных недель
+     *
+     * @return число нечетных недель
      */
     public static int remainingOddWeek() {
         if (!(remainingWeek() % 2 == 0)) {
-            if (SemesterCycle.getNowDate().equals(SemesterCycle.EVEN)) {
+            if (weekParity(SemesterCycle.getNowDate()).equals(SemesterCycle.EVEN)) {
                 return remainingWeek() / 2;
             } else {
                 return remainingWeek() / 2 + 1;
@@ -34,16 +41,21 @@ public class SemesterCycleService {
         }
     }
 
-    /*
-    Высчитывает и возвращает оставшееся количество учебных недель
+    /**
+     * Находит оставшееся количество всех недель
+     *
+     * @return количество недель
      */
     public static int remainingWeek() {
         return SemesterCycle.getFinalDate().get(Calendar.WEEK_OF_YEAR) -
                 SemesterCycle.getNowDate().get(Calendar.WEEK_OF_YEAR);
     }
 
-    /*
-    Возвращает четность недели
+    /**
+     * Возвращает четность недели
+     *
+     * @param calendar принемает календарь
+     * @return возвращает констатную строку четности недели
      */
     public static String weekParity(Calendar calendar) {
         if (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0) {
