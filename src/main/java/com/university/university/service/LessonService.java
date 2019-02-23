@@ -22,5 +22,4 @@ public interface LessonService {
      */
     Lesson findById(Long id);
 
-
 }

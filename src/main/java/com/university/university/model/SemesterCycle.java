@@ -5,8 +5,8 @@ import java.util.GregorianCalendar;
 
 public class SemesterCycle extends GregorianCalendar {
 
-    public static final String EVEN = "Четная";
-    public static final String ODD = "Нечетная";
+    public static final boolean EVEN = true;
+    public static final boolean ODD = false;
     private static Calendar finalDate = new GregorianCalendar(2019, Calendar.MAY, 31);
     private static Calendar nowDate = new GregorianCalendar();
 

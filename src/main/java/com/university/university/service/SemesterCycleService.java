@@ -14,7 +14,7 @@ public class SemesterCycleService {
      */
     public static int remainingEvenWeek() {
         if (!(remainingWeek() % 2 == 0)) {
-            if (weekParity(SemesterCycle.getNowDate()).equals(SemesterCycle.EVEN)) {
+            if (weekParity(SemesterCycle.getNowDate()) == SemesterCycle.EVEN) {
                 return remainingWeek() / 2 + 1;
             } else {
                 return remainingWeek() / 2;
@@ -31,7 +31,7 @@ public class SemesterCycleService {
      */
     public static int remainingOddWeek() {
         if (!(remainingWeek() % 2 == 0)) {
-            if (weekParity(SemesterCycle.getNowDate()).equals(SemesterCycle.EVEN)) {
+            if (weekParity(SemesterCycle.getNowDate()) == SemesterCycle.EVEN) {
                 return remainingWeek() / 2;
             } else {
                 return remainingWeek() / 2 + 1;
@@ -55,9 +55,9 @@ public class SemesterCycleService {
      * Возвращает четность недели
      *
      * @param calendar принемает календарь
-     * @return возвращает констатную строку четности недели
+     * @return возвращает boolean четности недели true - even false - odd
      */
-    public static String weekParity(Calendar calendar) {
+    public static boolean weekParity(Calendar calendar) {
         if (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0) {
             return SemesterCycle.EVEN;
         } else {

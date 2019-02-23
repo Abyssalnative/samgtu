@@ -1,5 +1,6 @@
 package com.university.university.service;
 
+import com.university.university.entity.Schedule;
 import com.university.university.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     ScheduleRepository scheduleRepository;
 
-
     @Override
-    public String getScheduleByDay() {
-        return scheduleRepository.getScheduleByDay(1,true);
+    public List<Schedule> findByDayAndEven() {
+        return scheduleRepository.findByDayAndEven(1,true);
     }
 }

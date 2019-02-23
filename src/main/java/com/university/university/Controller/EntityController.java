@@ -1,6 +1,7 @@
 package com.university.university.Controller;
 
 import com.university.university.entity.Lesson;
+import com.university.university.entity.Schedule;
 import com.university.university.service.LessonService;
 import com.university.university.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,5 @@ public class EntityController {
     }
 
     @GetMapping("/schedule")
-    public String getSchedule(){ return scheduleService.getScheduleByDay();}
+    public List<Schedule> getSchedule(){ return scheduleService.findByDayAndEven();}
 }
