@@ -22,4 +22,7 @@ public interface LessonService {
      */
     Lesson findById(Long id);
 
+    List<Lesson> findByTeacherLastName(String lastName);
+
+    List<Lesson> findLessonByTeacherLastName(String lastName);
 }

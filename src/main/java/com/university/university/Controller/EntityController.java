@@ -4,6 +4,7 @@ import com.university.university.entity.Lesson;
 import com.university.university.entity.Schedule;
 import com.university.university.service.LessonService;
 import com.university.university.service.ScheduleService;
+import com.university.university.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,13 @@ public class EntityController {
     @Autowired
     private final ScheduleService scheduleService;
 
-    public EntityController(LessonService lessonService, ScheduleService scheduleService) {
+    @Autowired
+    private final TeacherService teacherService;
+
+    public EntityController(LessonService lessonService, ScheduleService scheduleService, TeacherService teacherService) {
         this.lessonService = lessonService;
         this.scheduleService = scheduleService;
+        this.teacherService = teacherService;
     }
 
     @GetMapping("/lesson")
@@ -36,4 +41,11 @@ public class EntityController {
 
     @GetMapping("/schedule")
     public List<Schedule> getSchedule(){ return scheduleService.findByDayAndEven();}
+
+    @RequestMapping(value = "/teacher", method = RequestMethod.GET)
+    public List<Lesson> getTeacher(@RequestParam String teacherName) {
+        System.out.println(teacherName + " имя");
+        System.out.println("name");
+        return lessonService.findLessonByTeacherLastName(teacherName);
+    }
 }

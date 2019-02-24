@@ -24,4 +24,14 @@ public class LessonServiceImpl implements LessonService {
         return lessonRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<Lesson> findByTeacherLastName(String lastName) {
+        return lessonRepository.findByTeacherLastName(lastName);
+    }
+
+    @Override
+    public List<Lesson> findLessonByTeacherLastName(String lastName) {
+        return lessonRepository.findLessonByTeacher_LastName(lastName);
+    }
+
 }

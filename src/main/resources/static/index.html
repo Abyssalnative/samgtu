@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/date.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+    </script>
+
+
 </head>
 <body>
 <p><b>Главное меню</b></p>
@@ -24,16 +32,23 @@
         </tr>
     </table>
 </form>
-<form>
-    <p><b>Поиск предмета по преподователю:</b></p>
-    <p>
-        <input type="text" size="20">
-        <input type="submit" value="Ввод">
-    <p>
-</form>
-<form>
-    <p><b>Когда следующая пара:</b></p>
-    <p>Введите название пары <input type="text"><input type="submit" value="Ok"></p>
+
+
+<p><b>Поиск предмета по преподователю:</b></p>
+<p>
+    <input id="lessonByTeacher" type="text" size="20">
+    <button onclick="post()" value="Ok"></button>
+<p>
+    <script>
+        function post(){
+            $.get("entity/teacher", {name: $("#lessonByTeacher").val()});
+        }
+    </script>
+
+
+    <form>
+<p><b>Когда следующая пара:</b></p>
+<p>Введите название пары <input type="text"><input type="submit" value="Ok"></p>
 </form>
 
 
