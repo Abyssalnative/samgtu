@@ -8,21 +8,36 @@ public interface LessonService {
 
 
     /**
-     * Находит все пары
+     * Находит название занятия по имени преподавателя
      *
-     * @return список пар
-     */
-    List<Lesson> findAll();
-
-    /**
-     * Находит пару по id
-     *
-     * @param id id занятия
+     * @param name фамилия преподавателя
      * @return занятие
      */
-    Lesson findById(Long id);
+    List<Lesson> findByTeacherLastName(String name);
 
-    List<Lesson> findByTeacherLastName(String lastName);
+    /**
+     * Добавляет новый пердмет
+     *
+     * @param teacherLastName фамилия учителя
+     * @param lessonName      название предмета
+     * @param type            тип предмета
+     */
+    void addNewLesson(String teacherLastName, String lessonName, String type);
 
-    List<Lesson> findLessonByTeacherLastName(String lastName);
+    /**
+     * Находит один предмет преподавателя
+     *
+     * @param lastName фамилия преподавателя
+     * @return
+     */
+    Lesson findFirstByTeacherLastName(String lastName);
+
+    /**
+     * Находит преподавателя
+     *
+     * @param lastName фамилия преподавателя
+     * @param type     тип предмета
+     * @return преподавателя
+     */
+    Lesson findByTeacherLastNameAndType(String lastName, String type);
 }

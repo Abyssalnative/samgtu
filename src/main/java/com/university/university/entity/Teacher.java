@@ -1,30 +1,32 @@
 package com.university.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
 public class Teacher {
 
+    @Column(name = "last_name", nullable = false)
     @Id
-    @GeneratedValue
-    private long id;
-
-    @Column
-    private String firstName;
-
-    @Column
     private String lastName;
 
-    public Teacher() {
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<Lesson> lesson;
+
+
+    public Set<Lesson> getLesson() {
+        return lesson;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setLesson(Set<Lesson> lesson) {
+        this.lesson = lesson;
     }
 
     public String getFirstName() {
@@ -42,4 +44,5 @@ public class Teacher {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }

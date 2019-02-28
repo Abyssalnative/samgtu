@@ -1,5 +1,7 @@
 package com.university.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,33 +9,23 @@ import javax.persistence.*;
 public class Schedule {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @JoinColumn(name = "lesson_Id")
+    @JoinColumn(name = "lesson_id")
     @ManyToOne
-    private Lesson lesson;
+    @JsonManagedReference
+    public Lesson lesson;
 
     @Column
     private boolean even;
 
     @Column
-    private int day;
-
-    @Column
     private int pairOrder;
 
+    @Column
+    private int day;
 
-    public Schedule(){}
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Lesson getLesson() {
         return lesson;
@@ -41,6 +33,14 @@ public class Schedule {
 
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isEven() {
@@ -51,19 +51,19 @@ public class Schedule {
         this.even = even;
     }
 
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
     public int getPairOrder() {
         return pairOrder;
     }
 
     public void setPairOrder(int pairOrder) {
         this.pairOrder = pairOrder;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 }

@@ -1,56 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="style.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="js/date.js"></script>
+    <script src="js/data.js"></script>
     <script
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous">
     </script>
-
+    <script>parsingSchedule()</script>
+    <script>refreshTeacherButton('#selectTeacher')</script>
+    <script>refreshTeacherButton('#selectTeacher2')</script>
 
 </head>
-<body>
 <p><b>Главное меню</b></p>
 <p>Сегодня:
-    <script src="js/date.js"></script>
+    <script>currentDate()</script>
 </p>
-<form>
-    <p>Расписание на неделю</p>
-    <table border="1" width="50%" cellpadding="5">
+<p><b>Расписание на текущую неделю:</b></p>
+<div id="scheduleTables">
+    <p>
+    <table width="200" class="schedule" id="scheduleTable1" border="1">
+        <caption>Понедельник:</caption>
         <tr>
             <th>Номер пары</th>
             <th>Название предмета</th>
-            <th>Имя преподователя</th>
-        </tr>
-        <tr>
-            <th>1</th>
-            <th>Lesson name</th>
-            <th>Teacher name</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
         </tr>
     </table>
-</form>
+
+    <p>
+    <table class="schedule" id="scheduleTable2" border="1">
+        <caption>Вторник:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="scheduleTable3" border="1">
+        <caption>Среда:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="scheduleTable4" border="1">
+        <caption>Четверг:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="scheduleTable5" border="1">
+        <caption>Пятница:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="scheduleTable6" border="1">
+        <caption>Суббота:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+</div>
+
+<p>Показать все расписание</p>
+<input id="showButton" type="button" value="Показать" onclick="showAllSchedule()">
+<div class="schedule" id="fullScheduleTables">
+    <p><b>Расписание на следующую неделю:</b></p>
+    <p>
+    <table width="200" class="schedule" id="fullScheduleTable1" border="1">
+        <caption>Понедельник:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="fullScheduleTable2" border="1">
+        <caption>Вторник:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="fullScheduleTable3" border="1">
+        <caption>Среда:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="fullScheduleTable4" border="1">
+        <caption>Четверг:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="fullScheduleTable5" border="1">
+        <caption>Пятница:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+    <p>
+    <table class="schedule" id="fullScheduleTable6" border="1">
+        <caption>Суббота:</caption>
+        <tr>
+            <th>Номер пары</th>
+            <th>Название предмета</th>
+            <th>Тип</th>
+            <th>Имя преподавателя</th>
+        </tr>
+    </table>
+
+</div>
 
 
-<p><b>Поиск предмета по преподователю:</b></p>
+<p><b>Поиск предмета по преподавателю:</b></p>
+
+<p>Введите фамилию преподавателя</p>
 <p>
     <input id="lessonByTeacher" type="text" size="20">
-    <button onclick="post()" value="Ok"></button>
+</p>
 <p>
-    <script>
-        function post(){
-            $.get("entity/teacher", {name: $("#lessonByTeacher").val()});
-        }
-    </script>
+    <input type="submit" onclick="findLessonByTeacher()" value="Enter">
+</p>
 
 
-    <form>
 <p><b>Когда следующая пара:</b></p>
-<p>Введите название пары <input type="text"><input type="submit" value="Ok"></p>
-</form>
+
+<p>Введите фамилию преподавателя</p>
+<p><input id="nearestLesson" type="text" size="20"></p>
+<p><input onclick="findNearestLesson()" type="submit" value="Enter"></p>
 
 
+<p><b>Добавить преподавателя:</b></p>
+
+<p>Введите имя преподавателя</p>
+<p><input id="teacherFirstName" type="text" size="20"></p>
+<p>Введите фамилию преподавателя</p>
+<p><input id="teacherLastName" type="text" size="20"></p>
+<p><input id="addTeacher" type="button" value="Enter" onclick="addTeacher()"></p>
+
+
+<p><b>Добавить предмет преподавателю:</b></p>
+
+<p>Выберете преподавателя</p>
+<select id="selectTeacher" required></select>
+<p>Введите название предмета</p>
+<input id="lessonName" type="text" size="20">
+<p>Выберете тип предмета</p>
+<select id="type">
+    <option>Практика</option>
+    <option>Лекции</option>
+</select>
+<p><input id="addLesson" type="button" value="Enter" onclick="addLesson()"></p>
+
+
+<p><b>Добавить позицию в расписание:</b></p>
+
+<p>Выберете неделю</p>
+<select id="evenWeek">
+    <option>Четная</option>
+    <option>Нечетная</option>
+</select>
+<p>Выберете преподавателя</p>
+<select  id="selectTeacher2" onclick="refreshTypeButton()" required></select>
+<p>Тип предмета</p>
+<div id="scheduleSelectTypeDiv">
+    <select>
+        <option style="display:none">null</option>
+    </select>
+</div>
+</select>
+<p>День недели</p>
+<select id="lessonDayOfWeek">
+    <option value="1">Понедельник</option>
+    <option value="2">Вторник</option>
+    <option value="3">Среда</option>
+    <option value="4">Четверг</option>
+    <option value="5">Пятница</option>
+    <option value="6">Суббота</option>
+</select>
+<p>Время предмета</p>
+<select id="pairOrder">
+    <option value="1">8:00-9:35</option>
+    <option value="2">9:45-11:20</option>
+    <option value="3">11:30-13:05</option>
+    <option value="4">13:35-15:10</option>
+    <option value="5">15:20-16:55</option>
+    <option value="6">17:05-18:40</option>
+</select>
+<p><input id="addSchedule" type="button" value="Enter" onclick="addSchedule()"></p>
+
+
+<p><b>Удалить преподавателя:</b></p>
+
+<input id="deleteTeacher">
+<input type="submit" value="Enter" onclick="deleteTeacher()">
 </body>
 </html>
