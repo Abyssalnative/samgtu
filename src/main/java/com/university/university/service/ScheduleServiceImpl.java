@@ -22,7 +22,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<Schedule> findByEven(boolean even) {
-        return scheduleRepository.findByEven(even);
+        return scheduleRepository.findByEvenOrderByPairOrder(even);
     }
 
     @Override

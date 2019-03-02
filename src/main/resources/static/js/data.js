@@ -68,10 +68,10 @@ function addTeacher() {
         firstName: $("#teacherFirstName").val(),
         lastName: $("#teacherLastName").val()
     }, function (data) {
+        refreshAllTeacherButton();
         alert(data.toLocaleString());
     });
-    refreshTeacherButton('#selectTeacher');
-    refreshTeacherButton('#selectTeacher2');
+
 }
 
 function addLesson() {
@@ -99,11 +99,10 @@ function addSchedule() {
 function deleteTeacher() {
     var conBox = confirm("Вы уверенны?");
     if (conBox) {
-        var teacherLastName = $("#deleteTeacher").val();
+        var teacherLastName = $('#deleteTeacher').val();
         $.get("entity/teacher/" + teacherLastName + "/remove", {teacherName: teacherLastName}, function (data) {
-            refreshTeacherButton('#selectTeacher');
-            refreshTeacherButton('#selectTeacher2');
-            alert(data.toLocaleString())
+            refreshAllTeacherButton();
+            alert(data.toLocaleString());
         });
     } else {
         alert("Преподаватель остался в базе")
@@ -123,12 +122,20 @@ function refreshTypeButton() {
 function refreshTeacherButton(selectTeacher) {
     $.getJSON("entity/teacher/select", function (data) {
         $(selectTeacher).empty();
-        $(selectTeacher).append('<select id=' + selectTeacher + ' ><option style="display:none"></option></select>');
+        $(selectTeacher).append('<select id=' + selectTeacher + ' ><option style="display:none">null</option></select>');
         data.forEach(function (teacher) {
             $(selectTeacher).append('<option>' + teacher.lastName + '</option>')
         })
     })
 }
+
+function refreshAllTeacherButton() {
+    refreshTeacherButton('#selectTeacher');
+    refreshTeacherButton('#selectTeacher2');
+    refreshTeacherButton('#lessonByTeacher');
+     refreshTeacherButton('#deleteTeacher');
+     refreshTeacherButton('#nearestLesson');
+ }
 
 function parsingSchedule() {
     $.getJSON("entity/schedule", function (data) {
@@ -137,12 +144,7 @@ function parsingSchedule() {
                 '<td>' + schedule.lesson.name + '</td><td>' + schedule.lesson.type + '</td><td>' + schedule.lesson.teacher.lastName + '</td></tr>');
             document.getElementById("scheduleTable" + schedule.day).style.display = "initial";
         })
-    })
-}
-
-function showAllSchedule() {
-    document.getElementById("fullScheduleTables").style.display ="initial";
-    document.getElementById("showButton").style.display = "none";
+    });
     $.getJSON("entity/schedule/full", function (data) {
         data.forEach(function (schedule) {
             $('#fullScheduleTable' + schedule.day + ' > tbody:last-child').append('<tr><td>' + schedule.pairOrder + '</td>' +
@@ -151,3 +153,6 @@ function showAllSchedule() {
         })
     })
 }
+
+
+
