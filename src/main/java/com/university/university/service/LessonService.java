@@ -28,7 +28,7 @@ public interface LessonService {
      * Находит один предмет преподавателя
      *
      * @param lastName фамилия преподавателя
-     * @return
+     * @return возвращает преподавателя
      */
     Lesson findFirstByTeacherLastName(String lastName);
 

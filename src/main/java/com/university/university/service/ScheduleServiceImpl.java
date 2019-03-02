@@ -3,7 +3,7 @@ package com.university.university.service;
 import com.university.university.entity.Schedule;
 import com.university.university.model.SemesterCycle;
 import com.university.university.repository.ScheduleRepository;
-import com.university.university.util.ValueFinder;
+import com.university.university.util.SemesterCycleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Schedule findNearestLesson(String name) {
-        List<Schedule> schedulesCurrentWeek = scheduleRepository.findByEvenAndLessonTeacherLastName(ValueFinder.findCurrentEvenWeek(), name);
-        List<Schedule> schedulesNextWeek = scheduleRepository.findByEvenAndLessonTeacherLastName(!(ValueFinder.findCurrentEvenWeek()), name);
+        List<Schedule> schedulesCurrentWeek = scheduleRepository.findByEvenAndLessonTeacherLastName(SemesterCycleUtil.findCurrentEvenWeek(), name);
+        List<Schedule> schedulesNextWeek = scheduleRepository.findByEvenAndLessonTeacherLastName(!(SemesterCycleUtil.findCurrentEvenWeek()), name);
         for (Schedule schedule : schedulesCurrentWeek) {
             if (SemesterCycle.getNowDate().get(Calendar.DAY_OF_WEEK) <= schedule.getDay()) {
                 return schedule;

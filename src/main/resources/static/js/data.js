@@ -133,9 +133,9 @@ function refreshAllTeacherButton() {
     refreshTeacherButton('#selectTeacher');
     refreshTeacherButton('#selectTeacher2');
     refreshTeacherButton('#lessonByTeacher');
-     refreshTeacherButton('#deleteTeacher');
-     refreshTeacherButton('#nearestLesson');
- }
+    refreshTeacherButton('#deleteTeacher');
+    refreshTeacherButton('#nearestLesson');
+}
 
 function parsingSchedule() {
     $.getJSON("entity/schedule", function (data) {

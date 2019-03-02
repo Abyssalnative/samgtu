@@ -1,7 +1,6 @@
 package com.university.university.service;
 
 import com.university.university.entity.Teacher;
-import com.university.university.repository.LessonRepository;
 import com.university.university.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,7 +6,7 @@ import com.university.university.entity.Teacher;
 import com.university.university.service.LessonService;
 import com.university.university.service.ScheduleService;
 import com.university.university.service.TeacherService;
-import com.university.university.util.ValueFinder;
+import com.university.university.util.SemesterCycleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -101,7 +101,7 @@ public class EntityController {
      */
     @RequestMapping(value = "/schedule", method = RequestMethod.GET)
     public List<Schedule> getScheduleEven() {
-        return scheduleService.findByEven(ValueFinder.findCurrentEvenWeek());
+        return scheduleService.findByEven(SemesterCycleUtil.findCurrentEvenWeek());
     }
 
     /**
@@ -111,7 +111,7 @@ public class EntityController {
      */
     @RequestMapping(value = "/schedule/full")
     public List<Schedule> getFullSchedule() {
-        return scheduleService.findByEven(!(ValueFinder.findCurrentEvenWeek()));
+        return scheduleService.findByEven(!(SemesterCycleUtil.findCurrentEvenWeek()));
     }
 
     /**

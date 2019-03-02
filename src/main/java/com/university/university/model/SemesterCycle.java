@@ -14,7 +14,5 @@ public class SemesterCycle extends GregorianCalendar {
         return finalDate;
     }
 
-    public static Calendar getNowDate() {
-        return nowDate;
-    }
+    public static Calendar getNowDate() { return nowDate; }
 }
