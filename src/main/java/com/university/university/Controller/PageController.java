@@ -11,5 +11,4 @@ public class PageController {
         return "index.html";
     }
 
-
 }

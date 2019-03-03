@@ -9,12 +9,15 @@ import java.util.List;
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
-
     List<Lesson>findByTeacherLastName(String name);
 
-    Lesson findFirstByTeacherLastName(String lastName);
+    List<Lesson>findByTeacherId(long id);
 
-    Lesson findByTeacherLastNameAndType(String lastName,String type);
+    Lesson findFirstByTeacherId(long id);
+
+    Lesson findByNameAndType(String name, String type);
+
+    Lesson findFirstById(long id);
 
     @Override
     <S extends Lesson> S saveAndFlush(S s);

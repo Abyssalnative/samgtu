@@ -7,19 +7,22 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, String> {
+public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     @Override
     <S extends Teacher> S saveAndFlush(S s);
 
-    Teacher findFirstByLastName(String lastName);
-
     @Override
     <S extends Teacher> List<S> findAll(Example<S> example);
 
-    @Transactional
-    void deleteByLastName(String lastName);
+    Teacher findById(long id);
+
+    Teacher findFirstByLastName(String lastName);
+
+    @Override
+    void deleteById(Long aLong);
 }

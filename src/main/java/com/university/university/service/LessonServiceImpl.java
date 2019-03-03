@@ -24,9 +24,24 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public void addNewLesson(String lastNameTeacher, String lessonName, String type) {
+    public List<Lesson> findByTeacherId(long id) {
+        return lessonRepository.findByTeacherId(id);
+    }
+
+    @Override
+    public Lesson findFirstByTeacherId(long id) {
+        return lessonRepository.findFirstByTeacherId(id);
+    }
+
+    @Override
+    public Lesson findByNameAndType(String name, String type) {
+        return lessonRepository.findByNameAndType(name,type);
+    }
+
+    @Override
+    public void addLesson(long id, String lessonName, String type) {
         Lesson lesson = new Lesson();
-        Teacher teacher = teacherService.findByLastName(lastNameTeacher);
+        Teacher teacher = teacherService.findById(id);
         lesson.setTeacher(teacher);
         lesson.setName(lessonName);
         lesson.setType(type);
@@ -34,14 +49,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Lesson findFirstByTeacherLastName(String lastName) {
-        return lessonRepository.findFirstByTeacherLastName(lastName);
+    public Lesson findFirstById(long id) {
+        return lessonRepository.findFirstById(id);
     }
-
-    @Override
-    public Lesson findByTeacherLastNameAndType(String lastName, String type) {
-        return lessonRepository.findByTeacherLastNameAndType(lastName, type);
-    }
-
-
 }

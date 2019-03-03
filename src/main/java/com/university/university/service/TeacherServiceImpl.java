@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -20,8 +21,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void deleteByLastName(String lastName) {
-        teacherRepository.deleteByLastName(lastName);
+    public Teacher findById(long id) {
+        return teacherRepository.findById(id);
     }
 
     @Override
@@ -35,5 +36,10 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(long id) {
+        teacherRepository.deleteById(id);
     }
 }

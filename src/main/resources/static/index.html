@@ -12,8 +12,8 @@
     </script>
     <script>
         function showScheduleButton() {
-            var allSchedule=document.getElementById("fullScheduleTables");
-            allSchedule.style.display = (allSchedule.style.display === 'none')? 'initial': 'none';
+            var allSchedule = document.getElementById("fullScheduleTables");
+            allSchedule.style.display = (allSchedule.style.display === 'none') ? 'initial' : 'none';
         }
     </script>
     <script>
@@ -167,76 +167,78 @@
     </table>
 </div>
 
-
+<hr align="left" width="500" size="2" color="#ff0000" />
 <p><b>Поиск предмета по преподавателю:</b></p>
 
-<p>Введите фамилию преподавателя</p>
+<p>Выберете фамилию преподавателя</p>
 <p>
-    <select id="lessonByTeacher" required>
-        <option style="display: none">null</option>
+    <select id="lessonByTeacher">
     </select>
 </p>
 <p>
     <input type="submit" onclick="findLessonByTeacher()" value="Enter">
 </p>
 
-
+<hr align="left" width="500" size="2" color="#ff0000" />
 <p><b>Когда следующая пара:</b></p>
 
-<p>Введите фамилию преподавателя</p>
+<p>Выерете фамилию преподавателя</p>
 <p>
-<select id="nearestLesson" required>
-    <option style="display: none">null</option>
-</select>
+    <select id="nextTeacher" onclick="refreshNextLessonButton()" required>
+    </select>
 </p>
-<p><input onclick="findNearestLesson()" type="submit" value="Enter"></p>
+<p>Выберете предмет</p>
+<select id="nextLessonName">
+    <option value="" selected disabled hidden>Выбрать</option>
+</select>
+<p><input onclick="findNextLesson()" type="submit" value="Enter"></p>
 
-
+<hr align="left" width="500" size="2" color="#ff0000" />
 <p><b>Добавить преподавателя:</b></p>
 
-<p>Введите имя преподавателя</p>
-<p><input id="teacherFirstName" type="text" size="20"></p>
 <p>Введите фамилию преподавателя</p>
 <p><input id="teacherLastName" type="text" size="20"></p>
+<p>Введите имя преподавателя</p>
+<p><input id="teacherFirstName" type="text" size="20"></p>
 <p><input id="addTeacher" type="button" value="Enter" onclick="addTeacher();refreshAllTeacherButton()"></p>
 
-
+<hr align="left" width="500" size="2" color="#ff0000" />
 <p><b>Добавить предмет преподавателю:</b></p>
 
 <p>Выберете преподавателя</p>
 <select id="selectTeacher" required>
-    <option style="display: none">null</option>
+    <option value="" selected disabled hidden>Выбрать</option>
 </select>
 <p>Введите название предмета</p>
 <input id="lessonName" type="text" size="20">
 <p>Выберете тип предмета</p>
 <select id="type">
+    <option value="" selected disabled hidden>Выбрать</option>
     <option>Практика</option>
-    <option>Лекции</option>
+    <option>Лекция</option>
 </select>
 <p><input id="addLesson" type="button" value="Enter" onclick="addLesson()"></p>
 
-
+<hr align="left" width="500" size="2" color="#ff0000" />
 <p><b>Добавить позицию в расписание:</b></p>
 
 <p>Выберете неделю</p>
 <select id="evenWeek">
-    <option>Четная</option>
-    <option>Нечетная</option>
+    <option value="" selected disabled hidden>Выбрать</option>
+    <option value="true">Четная</option>
+    <option value="false">Нечетная</option>
 </select>
 <p>Выберете преподавателя</p>
-<select id="selectTeacher2" onclick="refreshTypeButton();" required>
-    <option style="display: none">null</option>
+<select id="scheduleSelectTeacher" onclick="refreshScheduleLessonButton()" required>
 </select>
-<p>Тип предмета</p>
-<div id="scheduleSelectTypeDiv">
-    <select>
-        <option style="display:none">null</option>
-    </select>
-</div>
+<p>Выберете предмет</p>
+<select id="scheduleSelectLesson" required>
+    <option value="" selected disabled hidden>Выбрать</option>
+</select>
 </select>
 <p>День недели</p>
 <select id="lessonDayOfWeek">
+    <option value="" selected disabled hidden>Выбрать</option>
     <option value="1">Понедельник</option>
     <option value="2">Вторник</option>
     <option value="3">Среда</option>
@@ -246,6 +248,7 @@
 </select>
 <p>Время предмета</p>
 <select id="pairOrder">
+    <option value="" selected disabled hidden>Выбрать</option>
     <option value="1">8:00-9:35</option>
     <option value="2">9:45-11:20</option>
     <option value="3">11:30-13:05</option>
@@ -255,12 +258,12 @@
 </select>
 <p><input id="addSchedule" type="button" value="Enter" onclick="addSchedule()"></p>
 
-
+<hr align="left" width="500" size="2" color="#ff0000" />
 <p><b>Удалить преподавателя:</b></p>
 
 <p>Выберете преподавателя</p>
 <select id="deleteTeacher" required>
-    <option style="display: none">null</option>
+    <option value="" selected disabled hidden>Выбрать</option>
 </select>
 <p>
     <input type="submit" value="Enter" onclick="deleteTeacher();refreshAllTeacherButton();">;

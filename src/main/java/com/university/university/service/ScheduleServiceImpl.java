@@ -19,44 +19,45 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private LessonService lessonService;
 
-
     @Override
     public List<Schedule> findByEven(boolean even) {
         return scheduleRepository.findByEvenOrderByPairOrder(even);
     }
 
     @Override
-    public Schedule findNearestLesson(String name) {
-        List<Schedule> schedulesCurrentWeek = scheduleRepository.findByEvenAndLessonTeacherLastName(SemesterCycleUtil.findCurrentEvenWeek(), name);
-        List<Schedule> schedulesNextWeek = scheduleRepository.findByEvenAndLessonTeacherLastName(!(SemesterCycleUtil.findCurrentEvenWeek()), name);
-        for (Schedule schedule : schedulesCurrentWeek) {
+    public Schedule findNextLesson(long id) {
+        List<Schedule> currentWeek = scheduleRepository.findByLessonIdAndEven(id,SemesterCycleUtil.findCurrentEvenWeek());
+        List<Schedule> nextWeek = scheduleRepository.findByLessonIdAndEven(id,!(SemesterCycleUtil.findCurrentEvenWeek()));
+        for (Schedule schedule : currentWeek) {
             if (SemesterCycle.getNowDate().get(Calendar.DAY_OF_WEEK) <= schedule.getDay()) {
                 return schedule;
             }
         }
-        for (Schedule schedule : schedulesNextWeek) {
+        for (Schedule schedule : nextWeek) {
             if (!(schedule == null)) {
                 return schedule;
             }
         }
-        for (Schedule schedule : schedulesCurrentWeek) {
+        for (Schedule schedule : currentWeek) {
             return schedule;
         }
         return null;
     }
 
     @Override
-    public void addSchedule(boolean even, String lastName, String type, int day, int pairOrder) {
-        Schedule schedule = new Schedule();
-        schedule.setEven(even);
-        schedule.setPairOrder(pairOrder);
-        schedule.setLesson(lessonService.findFirstByTeacherLastName(lastName));
-        schedule.setDay(day);
-        scheduleRepository.saveAndFlush(schedule);
+    public Schedule findSchedule(long id, boolean even, int pairOrder, int day) {
+        return scheduleRepository.findByLessonIdAndEvenAndPairOrderAndDay(id,even,pairOrder,day);
     }
 
     @Override
-    public Schedule findByEvenAndDayAndPairOrderAndLessonTeacherLastName(boolean even, int day, int pairOrder, String lastName) {
-        return scheduleRepository.findByEvenAndDayAndPairOrderAndLessonTeacherLastName(even, day, pairOrder, lastName);
+    public Schedule findCopy(boolean even, int day, int pairOrder) {
+        return scheduleRepository.findByEvenAndDayAndPairOrder(even,day,pairOrder);
     }
+
+    @Override
+    public Schedule saveSchedule(long lessonId, boolean even, int day, int pairOrder) {
+        Schedule schedule = new Schedule(lessonService.findFirstById(lessonId),even,day,pairOrder);
+        return scheduleRepository.saveAndFlush(schedule);
+    }
+
 }

@@ -13,7 +13,7 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn(name = "teacher_id", nullable = false)
+    @JoinColumn(name = "teacher_id")
     @ManyToOne
     private Teacher teacher;
 

@@ -10,13 +10,15 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
+    @Override
+    <S extends Schedule> S saveAndFlush(S s);
 
     List<Schedule> findByEvenOrderByPairOrder(boolean even);
 
-    List<Schedule> findByEvenAndLessonTeacherLastName(boolean even, String lastName);
+    List<Schedule> findByLessonIdAndEven(long id, boolean even);
 
-    Schedule findByEvenAndDayAndPairOrderAndLessonTeacherLastName(boolean even, int day, int pairOrder, String lastName);
+    Schedule findByLessonIdAndEvenAndPairOrderAndDay(long id, boolean even, int pairOrder, int day);
 
-    @Override
-    <S extends Schedule> S saveAndFlush(S s);
+    Schedule findByEvenAndDayAndPairOrder(boolean even, int day, int pairOrder);
+
 }

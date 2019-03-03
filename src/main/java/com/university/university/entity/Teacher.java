@@ -9,8 +9,12 @@ import java.util.Set;
 @Table(name = "teacher")
 public class Teacher {
 
-    @Column(name = "last_name", nullable = false)
     @Id
+    @Column(name = "id",nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "first_name", nullable = false)
@@ -20,6 +24,14 @@ public class Teacher {
     @JsonBackReference
     private Set<Lesson> lesson;
 
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Set<Lesson> getLesson() {
         return lesson;

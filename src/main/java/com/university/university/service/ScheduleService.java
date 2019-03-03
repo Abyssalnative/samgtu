@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface ScheduleService {
 
-
     /**
      * Находит расписание на текущую неделю
      *
@@ -20,33 +19,17 @@ public interface ScheduleService {
      * есть ли на следующей неделе предмет если нет то берет предмет с этой недели(при этом предмет будет
      * по счету в неделе меньше чем nowDate, что значит что он будет только через неделю)
      *
-     * @param name фамилия преподавателя
+     * @param id фамилия преподавателя
      *
      * @return позиция расписания
      */
-    Schedule findNearestLesson(String name);
+    Schedule findNextLesson(long id);
 
-    /**
-     * Добавляет новую позицию в расписании
-     *
-     * @param even четность недели
-     * @param lastName фамилия преподавателя
-     * @param type тип предмета
-     * @param day день предмета
-     * @param pairOrder какой по счету предмет
-     */
-    void addSchedule(boolean even,String lastName, String type, int day,int pairOrder);
+    Schedule findSchedule(long id, boolean even, int pairOrder, int day);
 
-    /**
-     * Находит позицию в расписании
-     *
-     * @param even четность недели
-     * @param day день недели
-     * @param pairOrder какой по счету предмет
-     * @param lastName фамилию преподавателя
-     * @return позицию расписания
-     */
-    Schedule findByEvenAndDayAndPairOrderAndLessonTeacherLastName(boolean even, int day, int pairOrder, String lastName);
+    Schedule findCopy(boolean even, int day, int pairOrder);
+
+    Schedule saveSchedule(long lessonId, boolean even, int day, int pairOrder);
 
 
 

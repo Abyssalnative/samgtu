@@ -6,38 +6,16 @@ import java.util.List;
 
 public interface LessonService {
 
-
-    /**
-     * Находит название занятия по имени преподавателя
-     *
-     * @param name фамилия преподавателя
-     * @return занятие
-     */
     List<Lesson> findByTeacherLastName(String name);
 
-    /**
-     * Добавляет новый пердмет
-     *
-     * @param teacherLastName фамилия учителя
-     * @param lessonName      название предмета
-     * @param type            тип предмета
-     */
-    void addNewLesson(String teacherLastName, String lessonName, String type);
+    List<Lesson> findByTeacherId(long id);
 
-    /**
-     * Находит один предмет преподавателя
-     *
-     * @param lastName фамилия преподавателя
-     * @return возвращает преподавателя
-     */
-    Lesson findFirstByTeacherLastName(String lastName);
+    Lesson findFirstByTeacherId(long id);
 
-    /**
-     * Находит преподавателя
-     *
-     * @param lastName фамилия преподавателя
-     * @param type     тип предмета
-     * @return преподавателя
-     */
-    Lesson findByTeacherLastNameAndType(String lastName, String type);
+    Lesson findByNameAndType(String name, String type);
+
+    void addLesson(long id, String lessonName, String type);
+
+    Lesson findFirstById(long id);
+
 }

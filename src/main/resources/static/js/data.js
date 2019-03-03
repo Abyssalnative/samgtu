@@ -23,13 +23,14 @@ function currentDate() {
 }
 
 function findLessonByTeacher() {
-    $.getJSON("entity/lesson", {lastName: $("#lessonByTeacher").val()}, function (data) {
-        alert(data.name);
+    $.getJSON("entity/lesson/current", {teacherId: $("#lessonByTeacher").val()}, function (data) {
+        alert(data.name)
     });
 }
 
-function findNearestLesson() {
-    $.getJSON("entity/lesson/nearest", {name: $("#nearestLesson").val()}, function (data) {
+
+function findNextLesson() {
+    $.getJSON("entity/schedule/next", {lessonId: $("#nextLessonName").val()}, function (data) {
         console.log(data);
         var even;
         if (data.even === true) {
@@ -64,7 +65,7 @@ function findNearestLesson() {
 }
 
 function addTeacher() {
-    $.get("entity/teacher/save", {
+    $.post("entity/teacher", {
         firstName: $("#teacherFirstName").val(),
         lastName: $("#teacherLastName").val()
     }, function (data) {
@@ -75,33 +76,33 @@ function addTeacher() {
 }
 
 function addLesson() {
-    $.get("entity/lesson/save", {
-        teacherName: $("#selectTeacher").val(),
-        lessonName: $("#lessonName").val(),
-        type: $("#type").val()
+    $.post("entity/lesson", {
+        teacherId: $('#selectTeacher').val(),
+        lessonName: $('#lessonName').val(),
+        type: $('#type').val()
     }, function (data) {
         alert(data.toLocaleString())
     });
 }
 
 function addSchedule() {
-    $.get("entity/schedule/save", {
-        even: $("#evenWeek").val(),
-        teacherName: $("#selectTeacher2").val(),
-        type: $("#scheduleLessonType").val(),
-        dayOfWeek: $("#lessonDayOfWeek").val(),
-        pairOrder: $("#pairOrder").val()
+    $.post("entity/schedule", {
+        lessonId: $('#scheduleSelectLesson').val(),
+        even: $('#evenWeek').val(),
+        day: $('#lessonDayOfWeek').val(),
+        pairOrder: $('#pairOrder').val()
     }, function (data) {
         alert(data.toLocaleString())
-    });
+    })
 }
 
 function deleteTeacher() {
     var conBox = confirm("Вы уверенны?");
     if (conBox) {
-        var teacherLastName = $('#deleteTeacher').val();
-        $.get("entity/teacher/" + teacherLastName + "/remove", {teacherName: teacherLastName}, function (data) {
+        $.post("entity/delete", {deleteTeacher: $('#deleteTeacher').val()}, function (data) {
             refreshAllTeacherButton();
+            refreshNextLessonButton();
+            refreshScheduleLessonButton();
             alert(data.toLocaleString());
         });
     } else {
@@ -109,43 +110,51 @@ function deleteTeacher() {
     }
 }
 
-function refreshTypeButton() {
-    $('#scheduleSelectTypeDiv').empty().append('<select id="scheduleLessonType"><option style="display:none">null</option></select>');
-    $.getJSON("entity/lesson/select", {lastName: $('#selectTeacher2').val()}, function (data) {
-        data.forEach(function (lesson) {
-            $('#scheduleLessonType').append('<option>' + lesson.type + '</option>')
-        })
-    })
-
-}
-
 function refreshTeacherButton(selectTeacher) {
     $.getJSON("entity/teacher/select", function (data) {
-        $(selectTeacher).empty();
-        $(selectTeacher).append('<select id=' + selectTeacher + ' ><option style="display:none">null</option></select>');
+        $(selectTeacher).empty().append('<option value="" selected disabled hidden>Выбрать</option>');
         data.forEach(function (teacher) {
-            $(selectTeacher).append('<option>' + teacher.lastName + '</option>')
+            $(selectTeacher).append('<option value="' + teacher.id + '" >' + teacher.lastName + '</option>')
+        });
+    })
+}
+
+function refreshNextLessonButton() {
+    $.getJSON("entity/lesson", {teacherId: $('#nextTeacher').val()}, function (data) {
+        $('#nextLessonName').empty().append('<option value="" selected disabled hidden>Выбрать</option>');
+        data.forEach(function (lesson) {
+            $('#nextLessonName').append('<option value="' + lesson.id + '">' + lesson.name + '(' + lesson.type + ')' + '</option>')
         })
     })
 }
+
+function refreshScheduleLessonButton() {
+    $.getJSON("entity/lesson", {teacherId: $('#scheduleSelectTeacher').val()}, function (data) {
+        $('#scheduleSelectLesson').empty().append('<select id="scheduleSelectLesson" ><option value="" selected disabled hidden>Выбрать</option></select>');
+        data.forEach(function (lesson) {
+            $('#scheduleSelectLesson').append('<option value="' + lesson.id + '">' + lesson.name + '(' + lesson.type + ')' + '</option>')
+        })
+    })
+}
+
 
 function refreshAllTeacherButton() {
     refreshTeacherButton('#selectTeacher');
-    refreshTeacherButton('#selectTeacher2');
+    refreshTeacherButton('#scheduleSelectTeacher');
     refreshTeacherButton('#lessonByTeacher');
     refreshTeacherButton('#deleteTeacher');
-    refreshTeacherButton('#nearestLesson');
+    refreshTeacherButton('#nextTeacher');
 }
 
 function parsingSchedule() {
-    $.getJSON("entity/schedule", function (data) {
+    $.getJSON("entity/schedule", {current: true}, function (data) {
         data.forEach(function (schedule) {
             $('#scheduleTable' + schedule.day + ' > tbody:last-child').append('<tr><td>' + schedule.pairOrder + '</td>' +
                 '<td>' + schedule.lesson.name + '</td><td>' + schedule.lesson.type + '</td><td>' + schedule.lesson.teacher.lastName + '</td></tr>');
             document.getElementById("scheduleTable" + schedule.day).style.display = "initial";
         })
     });
-    $.getJSON("entity/schedule/full", function (data) {
+    $.getJSON("entity/schedule", {current: false}, function (data) {
         data.forEach(function (schedule) {
             $('#fullScheduleTable' + schedule.day + ' > tbody:last-child').append('<tr><td>' + schedule.pairOrder + '</td>' +
                 '<td>' + schedule.lesson.name + '</td><td>' + schedule.lesson.type + '</td><td>' + schedule.lesson.teacher.lastName + '</td></tr>');

@@ -12,10 +12,10 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @JoinColumn(name = "lesson_id")
+    @JoinColumn(name = "lesson_id",nullable = false)
     @ManyToOne
     @JsonManagedReference
-    public Lesson lesson;
+    private Lesson lesson;
 
     @Column
     private boolean even;
@@ -26,6 +26,14 @@ public class Schedule {
     @Column
     private int day;
 
+    public Schedule(){}
+
+    public Schedule(Lesson lesson, boolean even, int day, int pairOrder) {
+        this.lesson = lesson;
+        this.even = even;
+        this.pairOrder = pairOrder;
+        this.day = day;
+    }
 
     public Lesson getLesson() {
         return lesson;
