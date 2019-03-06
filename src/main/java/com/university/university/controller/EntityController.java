@@ -7,6 +7,7 @@ import com.university.university.service.LessonService;
 import com.university.university.service.ScheduleService;
 import com.university.university.service.TeacherService;
 import com.university.university.util.SemesterCycleUtil;
+import com.university.university.util.MessageSourceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,35 +26,40 @@ public class EntityController {
     @Autowired
     private final TeacherService teacherService;
 
-    public EntityController(LessonService lessonService, ScheduleService scheduleService, TeacherService teacherService) {
+    // TODO: Переделать на спринговый MessageSource
+    @Autowired
+    private final MessageSourceUtil messageSourceUtil;
+
+    public EntityController(LessonService lessonService, ScheduleService scheduleService, TeacherService teacherService, MessageSourceUtil messageSourceUtil) {
         this.lessonService = lessonService;
         this.scheduleService = scheduleService;
         this.teacherService = teacherService;
+        this.messageSourceUtil = messageSourceUtil;
     }
 
     @RequestMapping(value = "/teacher", method = RequestMethod.POST)
     public String addTeacher(@RequestParam String firstName, @RequestParam String lastName) {
         if (teacherService.findByLastName(lastName) != null) {
-            return "Такой преподаватель уже существует";
+            return messageSourceUtil.getMessages("teacher.add.exist");
         }
         teacherService.addTeacher(firstName, lastName);
         if (teacherService.findByLastName(lastName) != null) {
-            return "Преподаватель успешно добавлен";
+            return messageSourceUtil.getMessages("teacher.add.successful");
         } else {
-            return "Ошибка добавления";
+            return messageSourceUtil.getMessages("teacher.add.error");
         }
     }
 
     @RequestMapping(value = "/lesson", method = RequestMethod.POST)
     public String addLesson(@RequestParam(value = "teacherId") long teacherId, @RequestParam String lessonName, @RequestParam String type) {
         if (lessonService.findByNameAndType(lessonName, type) != null) {
-            return "Такой предмет уже существует";
+            return messageSourceUtil.getMessages("lesson.add.exist");
         }
         lessonService.addLesson(teacherId, lessonName, type);
         if (lessonService.findByNameAndType(lessonName, type) != null) {
-            return "Предмет успешно добавлен";
+            return messageSourceUtil.getMessages("lesson.add.successful");
         } else {
-            return "Ошибка добавления";
+            return messageSourceUtil.getMessages("lesson.add.error");
         }
     }
 
@@ -61,13 +67,32 @@ public class EntityController {
     public String addSchedule(@RequestParam(name = "lessonId") long lessonId, @RequestParam(name = "even") boolean even,
                               @RequestParam(name = "day") int day, @RequestParam(name = "pairOrder") int pairOrder) {
         if (scheduleService.findCopy(even, day, pairOrder) != null) {
-            return "Такая позиция уже существует";
+            return messageSourceUtil.getMessages("schedule.add.exist");
         }
         scheduleService.saveSchedule(lessonId, even, day, pairOrder);
         if (scheduleService.findSchedule(lessonId, even, pairOrder, day) != null) {
-            return "Успешно добавлено";
+            return messageSourceUtil.getMessages("schedule.add.successful");
         } else {
-            return "Ошибка добавления";
+            return messageSourceUtil.getMessages("schedule.add.error");
+        }
+    }
+
+    /**
+     * Удаляет преподавателя
+     *
+     * @param id преподавателя
+     * @return статус процедуры
+     */
+    @RequestMapping(value = "/teacher", method = RequestMethod.DELETE)
+    public String removeTeacher(@RequestParam(name = "teacherId") long id) {
+        if (teacherService.findById(id) == null) {
+            return messageSourceUtil.getMessages("teacher.delete.notFound");
+        }
+        teacherService.deleteById(id);
+        if (teacherService.findById(id) == null) {
+            return messageSourceUtil.getMessages("teacher.delete.successful");
+        } else {
+            return messageSourceUtil.getMessages("teacher.delete.error");
         }
     }
 
@@ -138,24 +163,5 @@ public class EntityController {
     @RequestMapping(value = "lesson/select")
     public List<Lesson> findTypeByTeacherLastName(@RequestParam String lastName) {
         return lessonService.findByTeacherLastName(lastName);
-    }
-
-    /**
-     * Удаляет преподавателя
-     *
-     * @param id преподавателя
-     * @return статус процедуры
-     */
-    @RequestMapping(value = "/teacher", method = RequestMethod.DELETE)
-    public String removeTeacher(@RequestParam(name = "teacherId") long id) {
-        if (teacherService.findById(id) == null) {
-            return "Такого преподавателя не существует";
-        }
-        teacherService.deleteById(id);
-        if (teacherService.findById(id) == null) {
-            return "Преподаватель успешно удален";
-        } else {
-            return "Ошибка удаления";
-        }
     }
 }
