@@ -28,7 +28,6 @@ function findLessonByTeacher() {
     });
 }
 
-
 function findNextLesson() {
     $.getJSON("entity/schedule/next", {lessonId: $("#nextLessonName").val()}, function (data) {
         console.log(data);
@@ -99,12 +98,17 @@ function addSchedule() {
 function deleteTeacher() {
     var conBox = confirm("Вы уверенны?");
     if (conBox) {
-        $.post("entity/delete", {deleteTeacher: $('#deleteTeacher').val()}, function (data) {
-            refreshAllTeacherButton();
-            refreshNextLessonButton();
-            refreshScheduleLessonButton();
-            alert(data.toLocaleString());
-        });
+        $.ajax({
+            type: "DELETE",
+            url: "entity/teacher",
+            data: {teacherId: $('#deleteTeacher').val()},
+            success: function (data) {
+                refreshAllTeacherButton();
+                refreshNextLessonButton();
+                refreshScheduleLessonButton();
+                alert(data.toLocaleString());
+            }
+        })
     } else {
         alert("Преподаватель остался в базе")
     }

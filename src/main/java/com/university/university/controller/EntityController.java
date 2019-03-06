@@ -1,17 +1,13 @@
-package com.university.university.Controller;
+package com.university.university.controller;
 
 import com.university.university.entity.Lesson;
 import com.university.university.entity.Schedule;
 import com.university.university.entity.Teacher;
-import com.university.university.model.SemesterCycle;
 import com.university.university.service.LessonService;
 import com.university.university.service.ScheduleService;
 import com.university.university.service.TeacherService;
 import com.university.university.util.SemesterCycleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -150,8 +146,8 @@ public class EntityController {
      * @param id преподавателя
      * @return статус процедуры
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String removeTeacher(@RequestParam(name = "deleteTeacher") long id) {
+    @RequestMapping(value = "/teacher", method = RequestMethod.DELETE)
+    public String removeTeacher(@RequestParam(name = "teacherId") long id) {
         if (teacherService.findById(id) == null) {
             return "Такого преподавателя не существует";
         }

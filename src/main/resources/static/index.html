@@ -173,6 +173,7 @@
 <p>Выберете фамилию преподавателя</p>
 <p>
     <select id="lessonByTeacher">
+        <option value="" selected disabled hidden>Выбрать</option>
     </select>
 </p>
 <p>
@@ -185,6 +186,7 @@
 <p>Выерете фамилию преподавателя</p>
 <p>
     <select id="nextTeacher" onclick="refreshNextLessonButton()" required>
+        <option value="" selected disabled hidden>Выбрать</option>
     </select>
 </p>
 <p>Выберете предмет</p>
@@ -230,6 +232,7 @@
 </select>
 <p>Выберете преподавателя</p>
 <select id="scheduleSelectTeacher" onclick="refreshScheduleLessonButton()" required>
+    <option value="" selected disabled hidden>Выбрать</option>
 </select>
 <p>Выберете предмет</p>
 <select id="scheduleSelectLesson" required>
